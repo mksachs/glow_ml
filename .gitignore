@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+.idea
+.DS_Store
+*.log*
+instructions
+glow_ml_train/data/*

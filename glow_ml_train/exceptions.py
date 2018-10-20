@@ -1,0 +1,2 @@
+class AlgorithmNotImplemented(Exception):
+    pass
