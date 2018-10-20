@@ -72,6 +72,42 @@ From the active virtual environment, install using `pip`:
 
 ```pip install --upgrade -r requirements.txt```
 
+Congratulations! You are ready to go.
+
+## Running tests
+
+### Unit tests
+
+**Glow ML** uses `pytest` for unit test discovery and execution.  To run tests do this:
+
+```pytest -v```
+
+### Model tests
+
+In addition to unit tests, **Glow ML** also includes a model testing package. This assumes that there is a
+serialized model present in the `glow_ml/models` directory, and that there is testing data in the `glow_ml_train/data`
+directory. A model and testing data is included in the github repo so you can run the model testing package. The model
+testing package runs in two modes: the first loads the model directly into the testing package, the second sends all
+testing data through the API. The first mode can be run like this (from the main `glow_ml` project directory):
+
+```python -m model_tests predict_accident```
+
+The second mode requires that an API server is running. See [Running the server](#running-the-server) for instructions
+on how to do this. Once the server is running, the model tests can be run through the API by simply passing the the 
+API URL using the `--test_url` command line option.
+
+```python -m model_tests predict_accident --test_url http://127.0.0.1:5000/api/v1.0/predict_accident```
+
+## Running the server
+
+
+
+
+
+
+export FLASK_ENV=development
+export FLASK_APP=glow_ml:glow_ml_app
+flask run
 
 
 

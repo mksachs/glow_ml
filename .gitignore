@@ -107,4 +107,3 @@ venv.bak/
 .DS_Store
 *.log*
 instructions
-glow_ml_train/data/*

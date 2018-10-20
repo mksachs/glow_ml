@@ -64,7 +64,7 @@ def output_metrics(predictions, probabilities, truth):
     print(f'False Omission Rate: {false_ommision_rate}')
 
 
-def plot_pr_curve(truth, proba, output, size, placement):
+def plot_pr_curve(truth, proba, output, size, placement, model_name):
     fig = plt.figure(figsize=size)
     ax = fig.add_axes(placement)
 
@@ -77,12 +77,14 @@ def plot_pr_curve(truth, proba, output, size, placement):
     ax.set_ylabel('Precision')
     ax.set_ylim([0.0, 1.05])
     ax.set_xlim([0.0, 1.0])
-    ax.set_title('Precision-Recall curve')
+    ax.set_title(f'{model_name} Precision-Recall curve')
+
+    print(f'Precision-Recall curve saved to {output}')
 
     fig.savefig(output)
 
 
-def plot_roc_curve(truth, proba, output, size, placement):
+def plot_roc_curve(truth, proba, output, size, placement, model_name):
     fig = plt.figure(figsize=size)
     ax = fig.add_axes(placement)
 
@@ -97,12 +99,14 @@ def plot_roc_curve(truth, proba, output, size, placement):
     ax.set_ylim([0.0, 1.05])
     ax.set_xlim([0.0, 1.0])
     ax.legend(loc='lower right')
-    ax.set_title('Receiver Operating Characteristic')
+    ax.set_title(f'{model_name} Receiver Operating Characteristic')
+
+    print(f'Receiver Operating Characteristic saved to {output}')
 
     fig.savefig(output)
 
 
-def plot_class_curve(truth, pred, proba, output, size, placement):
+def plot_class_curve(truth, pred, proba, output, size, placement, model_name):
     fig = plt.figure(figsize=size)
     ax = fig.add_axes(placement)
 
@@ -143,7 +147,9 @@ def plot_class_curve(truth, pred, proba, output, size, placement):
     ax.set_ylabel('Density')
 
     ax.legend()
-    ax.set_title('Class Prediction Distribution')
+    ax.set_title(f'{model_name} Class Prediction Distribution')
+
+    print(f'Class Prediction Distribution saved to {output}')
 
     fig.savefig(output)
 
@@ -154,22 +160,24 @@ def output_curves(predictions, probabilities, truth, output_path, model_name):
     figsize = (800 / 72, 600 / 72)
     figplacement = [.1, .1, .8, .8]
 
+    model_file_name = '_'.join(model_name.lower().split(' '))
+
     plot_pr_curve(
         truth, probabilities[:,0],
-        f'{output_path}/{model_name}_pr_curve.png',
-        figsize, figplacement
+        f'{output_path}/{model_file_name}_pr_curve.png',
+        figsize, figplacement, model_name
     )
 
     plot_roc_curve(
         truth, probabilities[:, 0],
-        f'{output_path}/{model_name}_roc_curve.png',
-        figsize, figplacement
+        f'{output_path}/{model_file_name}_roc_curve.png',
+        figsize, figplacement, model_name
     )
 
     plot_class_curve(
         truth, predictions, probabilities,
-        f'{output_path}/{model_name}_class_curve.png',
-        figsize, figplacement
+        f'{output_path}/{model_file_name}_class_curve.png',
+        figsize, figplacement, model_name
     )
 
 
@@ -184,12 +192,12 @@ def predict_accident(test_data, test_url=None):
     else:
         predictions, probabilities = predict_remote('predict_accident', X, test_url)
 
-    print(predictions.shape, probabilities.shape, X.shape)
+    print('### Stats for the "Predict Accident" model ###')
 
     output_metrics(predictions, probabilities,  y)
 
     test_data_dir = '/'.join(test_data.split('/')[0:-1])
-    output_curves(predictions, probabilities,  y, test_data_dir, 'predict_accident')
+    output_curves(predictions, probabilities,  y, test_data_dir, 'Predict Accident')
 
 
 if __name__ == "__main__":
