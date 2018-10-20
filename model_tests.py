@@ -47,9 +47,12 @@ def output_metrics(predictions, probabilities, truth):
 
     tn, fp, fn, tp = cm.ravel()
 
+    true_negative_rate = tn / (tn + fp)
     negative_predictive_value = tn / (fn + tn)
-    false_positive_rate = fp / (fp + tn)
-    false_ommision_rate = fn / (fn + tn)
+    false_negative_rate = 1 - recall
+    false_positive_rate = 1 - true_negative_rate
+    false_discovery_rate = 1 - precision
+    false_ommision_rate = 1 - negative_predictive_value
 
     print('Confusion Matrix')
     print(f'|{tp:^10}|{fp:^10}|')
@@ -59,8 +62,11 @@ def output_metrics(predictions, probabilities, truth):
     print(f'Precision: {precision}')
     print(f'Recall: {recall}')
     print(f'F1: {f1}')
+    print(f'True Negative Rate: {true_negative_rate}')
     print(f'Negative Predictive Value: {negative_predictive_value}')
     print(f'False Positive Rate: {false_positive_rate}')
+    print(f'False Negative Rate: {false_negative_rate}')
+    print(f'False Discovery Rate: {false_discovery_rate}')
     print(f'False Omission Rate: {false_ommision_rate}')
 
 
