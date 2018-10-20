@@ -22,11 +22,30 @@ warnings.filterwarnings('ignore', category=DeprecationWarning)
 
 
 def predict(model, data):
+    """Make predictions.
+
+    Args:
+        model: The name of the model to use.
+        data: A pandas dataframe with the feature to use.
+
+    Returns:
+        (numpy.array, numpy.array): List of predictions and a list of prediction probabilities.
+    """
     clf = glow_ml_utils.load_ml(f'{glow_ml_const.ML_ROOT}/{model}.pkl')
     return clf.predict(data), clf.predict_proba(data)
 
 
 def predict_remote(model, data, url):
+    """Make predictions using the API.
+
+    Args:
+        model: The name of the model to use.
+        data: A pandas dataframe with the feature to use.
+        url: The URL to call to get predictions.
+
+    Returns:
+        (numpy.array, numpy.array): List of predictions and a list of prediction probabilities.
+    """
     data_list = data.to_dict('records')
     results = requests.post(url, json=data_list)
     pred = []
@@ -37,13 +56,20 @@ def predict_remote(model, data, url):
     return np.array(pred), np.array(proba)
 
 
-def output_metrics(predictions, probabilities, truth):
-    accuracy = accuracy_score(truth, predictions)
-    precision = precision_score(truth, predictions)
-    recall = recall_score(truth, predictions)
-    f1 = f1_score(truth, predictions)
+def output_metrics(pred, proba, truth):
+    """Print prediction metrics.
 
-    cm = confusion_matrix(truth, predictions)
+    Args:
+        pred: List of predictions.
+        proba: List of probabilities.
+        truth: List of actual values.
+    """
+    accuracy = accuracy_score(truth, pred)
+    precision = precision_score(truth, pred)
+    recall = recall_score(truth, pred)
+    f1 = f1_score(truth, pred)
+
+    cm = confusion_matrix(truth, pred)
 
     tn, fp, fn, tp = cm.ravel()
 
@@ -71,6 +97,16 @@ def output_metrics(predictions, probabilities, truth):
 
 
 def plot_pr_curve(truth, proba, output, size, placement, model_name):
+    """Plot a precision-recall curve.
+
+    Args:
+        truth: List of actual values.
+        proba: List of probabilities.
+        output: The file path to output the plot to.
+        size: A tuple specifying the size of the plot.
+        placement: A tuple specifying the margins of the plot.
+        model_name: The name of the model that is being used.
+    """
     fig = plt.figure(figsize=size)
     ax = fig.add_axes(placement)
 
@@ -91,6 +127,16 @@ def plot_pr_curve(truth, proba, output, size, placement, model_name):
 
 
 def plot_roc_curve(truth, proba, output, size, placement, model_name):
+    """Plot an ROC curve.
+
+        Args:
+            truth: List of actual values.
+            proba: List of probabilities.
+            output: The file path to output the plot to.
+            size: A tuple specifying the size of the plot.
+            placement: A tuple specifying the margins of the plot.
+            model_name: The name of the model that is being used.
+    """
     fig = plt.figure(figsize=size)
     ax = fig.add_axes(placement)
 
@@ -113,6 +159,16 @@ def plot_roc_curve(truth, proba, output, size, placement, model_name):
 
 
 def plot_class_curve(truth, pred, proba, output, size, placement, model_name):
+    """Plot a class probability distribution diagram.
+
+        Args:
+            truth: List of actual values.
+            proba: List of probabilities.
+            output: The file path to output the plot to.
+            size: A tuple specifying the size of the plot.
+            placement: A tuple specifying the margins of the plot.
+            model_name: The name of the model that is being used.
+    """
     fig = plt.figure(figsize=size)
     ax = fig.add_axes(placement)
 
@@ -160,7 +216,16 @@ def plot_class_curve(truth, pred, proba, output, size, placement, model_name):
     fig.savefig(output)
 
 
-def output_curves(predictions, probabilities, truth, output_path, model_name):
+def output_curves(pred, proba, truth, output_path, model_name):
+    """Plot all available diagrams.
+
+    Args:
+        pred: List of predictions.
+        proba: List of probabilities.
+        truth: List of actual values.
+        output_path: The directory to save the files in.
+        model_name: The name of the model to use.
+    """
     sns.set()
 
     figsize = (800 / 72, 600 / 72)
@@ -169,25 +234,31 @@ def output_curves(predictions, probabilities, truth, output_path, model_name):
     model_file_name = '_'.join(model_name.lower().split(' '))
 
     plot_pr_curve(
-        truth, probabilities[:,0],
+        truth, proba[:, 0],
         f'{output_path}/{model_file_name}_pr_curve.png',
         figsize, figplacement, model_name
     )
 
     plot_roc_curve(
-        truth, probabilities[:, 0],
+        truth, proba[:, 0],
         f'{output_path}/{model_file_name}_roc_curve.png',
         figsize, figplacement, model_name
     )
 
     plot_class_curve(
-        truth, predictions, probabilities,
+        truth, pred, proba,
         f'{output_path}/{model_file_name}_class_curve.png',
         figsize, figplacement, model_name
     )
 
 
 def predict_accident(test_data, test_url=None):
+    """Run tests on the 'predict_accident' model.
+
+    Args:
+        test_data: The location of the test data.
+        test_url: The test url to use if the tests are being run through the API.
+    """
     raw_data = pd.read_csv(test_data)
 
     X = raw_data.drop(const.PREDICT_ACCIDENT_TARGET, axis=1)

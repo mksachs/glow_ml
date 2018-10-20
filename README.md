@@ -221,10 +221,10 @@ python -m glow_ml_train.train -h
 
 ## Discussion
 
-Modeling in general can be a tricky business, and models are only as good as the data provided. The model that developed
-for this project should be thought of as an initial crack at the problem and not the final solution. That being said, 
-the final model that is included in this package does a really good job of predicting when workers *won't* have an 
-accident. It does not do a great job of predicting when they *will*. Let's look at the stats:
+Modeling in general can be a tricky business, and models are only as good as the data provided. The model that was 
+developed for this project should be thought of as an initial crack at the problem and not the final solution. That 
+being said, the final model that is included in this package does a really good job of predicting when workers *won't* 
+have an accident. It does not do a great job of predicting when they *will*. Let's look at the stats:
 
 ```bash
 ### Stats for the "Predict Accident" model ###
@@ -246,26 +246,33 @@ False Omission Rate: 0.04302029049783784
 There is a good discussion of what all of these stats mean [here](https://en.wikipedia.org/wiki/Precision_and_recall).
 The confusion matrix is laid out like so:
 
-```bash
+```text
 |  true positive   |  false positive  |
 |  false negative  |  true negative   |
 ```
 
-The main things to focus on here are the *True Negative Rate* and the *Negative Predictive Value*.
+The main things to focus on here are the *True Negative Rate* and the *Negative Predictive Value*. The *True Negative 
+Rate* is analogous to *Recall* and specifies the percentage of actual false elements that were selected by the model. 
+The *Negative Predictive Value* is analogous to *Precision* and specifies the percentage of false elements that were
+correctly identified as false.
 
-Negative Predictive Value -> Precision
+Another way to visualize what is going on is to look at how the model probabilities separate the classes.
+ 
+![Class Distribution](glow_ml_train/data/predict_accident_class_curve.png)
 
+As you can see in the diagram above, the *false* and *predicted false* distributions (solid lines) peak in the same 
+region (low probability because the plot is of the probability that the prediction is true). However, the *true* and 
+*predicted true* distributions (dashed lines) do not overlap as much. 
 
+Lastly, the **model_tests** utility also produces [ROC diagrams](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)
+and [precision-recall diagrams](http://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html).
 
+![ROC Curve](glow_ml_train/data/predict_accident_roc_curve.png)
 
+![Precision-Recall Curve](glow_ml_train/data/predict_accident_pr_curve.png)
 
-export FLASK_ENV=development
-export FLASK_APP=glow_ml:glow_ml_app
-flask run
+### Model development notebooks
 
-
-
-python -m glow_ml_train.train predict_accident --holdout 0.5 --algorithm gb
-
-pytest -v
+The `notebooks` directory in the main **Glow ML** directory contains a jupyter notebook with all of the exploratory 
+modeling work. 
 
