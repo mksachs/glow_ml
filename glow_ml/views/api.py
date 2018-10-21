@@ -1,6 +1,5 @@
 import flask
 import pandas as pd
-import numpy as np
 
 from glow_ml import glow_ml_app
 import glow_ml.utilities as utils
@@ -35,5 +34,3 @@ def predict_accident_info():
     }
 
     return flask.jsonify(ml_info)
-
-

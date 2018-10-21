@@ -304,7 +304,7 @@ if __name__ == "__main__":
     if args.test_data:
         test_data_path = args.test_data
 
-    if not os.path.isfile(test_data_path) :
+    if not os.path.isfile(test_data_path):
         raise FileNotFoundError(f'{os.getcwd()}{test_data_path} does not exist.')
 
     result = globals()[args.model](test_data_path, test_url=args.test_url)

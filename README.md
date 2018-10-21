@@ -49,7 +49,7 @@ To see a list of all available versions do this:
 pyenv install --list
 ```
 
-Glow ML was developed using the vanillia version of python `3.7.0` (don't use versions that have 
+Glow ML was developed using the vanilla version of python `3.7.0` (don't use versions that have 
 `anaconda-` or `pypy-` in them). 
 
 To install python:
@@ -76,7 +76,7 @@ Activate this virtual environment:
 pyenv activate glow_ml
 ```
 
-Your shell prompt should now look someting like this:
+Your shell prompt should now look something like this:
 
 ```bash
 (glow_ml) The-Queen-of-Cups:
@@ -264,7 +264,7 @@ As you can see in the diagram above, the *false* and *predicted false* distribut
 region (low probability because the plot is of the probability that the prediction is true). However, the *true* and 
 *predicted true* distributions (dashed lines) do not overlap as much. 
 
-Another interesting aspect of the gradient boosted tree model are the feature importances. This is a list of how much
+Another interesting aspect of the gradient boosted tree model is feature importance. This is a list of how much
 each feature contributes to the results.
 
 | Feature               | Importance |

@@ -1,6 +1,3 @@
-import os
-import tempfile
-
 import pytest
 import pandas as pd
 
@@ -17,8 +14,7 @@ test_data = [{
     'company': 89,
     'state': 2.0,
     'hours_worked_per_week': 36.914861
-},
-{
+}, {
     'risk_score': 4.435424,
     'gender': 'M',
     'age': 24.0,
@@ -91,4 +87,3 @@ def test_predict_accident_info(client, model):
 
     for key in ml_info:
         assert key in ml_info_api
-

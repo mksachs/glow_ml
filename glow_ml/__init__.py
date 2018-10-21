@@ -15,4 +15,3 @@ handler.setLevel(logging.INFO)
 glow_ml_app.logger.addHandler(handler)
 
 import glow_ml.views.api
-

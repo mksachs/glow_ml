@@ -174,7 +174,7 @@ if __name__ == "__main__":
     if args.training_data:
         training_data_path = args.training_data
 
-    if not os.path.isfile(training_data_path) :
+    if not os.path.isfile(training_data_path):
         raise FileNotFoundError(f'{os.getcwd()}{training_data_path} does not exist.')
 
     result = globals()[args.model](training_data_path, holdout=args.holdout, algorithm=args.algorithm)
