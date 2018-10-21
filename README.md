@@ -88,15 +88,19 @@ To deactivate the virtual environment do this:
 pyenv deactivate
 ```
 
-### Five: Install python dependencies
+### Five: Clone this repo
 
-From the active virtual environment, install using `pip`:
+```bash
+git clone https://github.com/mksachs/glow_ml.git
+```
+
+### Six: Install python dependencies
+
+From the active virtual environment, and from inside the main **Glow ML** directory, install using `pip`:
 
 ```bash
 pip install --upgrade -r requirements.txt
 ```
-
-### Six: Clone this repo!
 
 Congratulations! You are ready to go.
 
