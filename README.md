@@ -264,6 +264,23 @@ As you can see in the diagram above, the *false* and *predicted false* distribut
 region (low probability because the plot is of the probability that the prediction is true). However, the *true* and 
 *predicted true* distributions (dashed lines) do not overlap as much. 
 
+Another interesting aspect of the gradient boosted tree model are the feature importances. This is a list of how much
+each feature contributes to the results.
+
+| Feature               | Importance |
+|---------              |------------|
+| risk_score            | 51.01446%  |
+| age                   | 0.00068%   |
+| years_experience      | 0.00020%   |
+| hours_worked_per_week | 47.84194%  |
+| gender                | 0.00011%   |
+| role                  | 0.00002%   |
+| company               | 1.14256%   |
+| state                 | 0.00003%   |
+
+As can be seen from the table above, the results are almost completely determined by the risk score and the hours worked
+per week.
+
 Lastly, the **model_tests** utility also produces [ROC diagrams](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)
 and [precision-recall diagrams](http://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html).
 
