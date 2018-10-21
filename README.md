@@ -5,6 +5,10 @@ Glow ML is a lightweight machine learning training and deployment framework. It 
 which is a command line tool to train models and prepare them for deployment. Additionally, **Glow ML** 
 includes a utility to output stats for deployed models: **model_test.py**.
 
+There are many areas of the application that are just loosely sketched out. In order to be "production ready" more 
+robust testing and error handling should be implemented. In general though, this application contains the basic 
+scaffolding needed to solve this problem.
+
 ## Installation
 
 Glow ML requires python 3.6 or greater. The installation instructions here are for MacOSX using [homebrew](https://brew.sh "Homebrew"), 
@@ -120,7 +124,7 @@ In addition to unit tests, **Glow ML** also includes a model testing package. Th
 serialized model present in the `glow_ml/models` directory, and that there is testing data in the `glow_ml_train/data`
 directory. A model and testing data are included in the github repo so you can run the model testing package. The model
 testing package runs in two modes: the first loads the model directly into the testing package, the second sends all
-testing data through the API. The first mode can be run like this (from the main `glow_ml` project directory):
+testing data through the API. The first mode can be run like this (from the main **Glow ML** project directory):
 
 ```bash
 python -m model_tests predict_accident
