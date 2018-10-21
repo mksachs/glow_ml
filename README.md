@@ -96,6 +96,8 @@ From the active virtual environment, install using `pip`:
 pip install --upgrade -r requirements.txt
 ```
 
+### Six: Clone this repo!
+
 Congratulations! You are ready to go.
 
 ## Running tests
