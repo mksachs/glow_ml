@@ -118,7 +118,7 @@ pytest -v
 
 In addition to unit tests, **Glow ML** also includes a model testing package. This assumes that there is a
 serialized model present in the `glow_ml/models` directory, and that there is testing data in the `glow_ml_train/data`
-directory. A model and testing data is included in the github repo so you can run the model testing package. The model
+directory. A model and testing data are included in the github repo so you can run the model testing package. The model
 testing package runs in two modes: the first loads the model directly into the testing package, the second sends all
 testing data through the API. The first mode can be run like this (from the main `glow_ml` project directory):
 
